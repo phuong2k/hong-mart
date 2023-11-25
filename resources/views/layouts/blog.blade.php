@@ -63,7 +63,7 @@
                     @auth
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="py-2 px-4 bg-red-500 hover:bg-red-700">LogOut</button>
+                            <button class="py-2 px-4 bg-red-500 hover:bg-red-700">Đăng xuất</button>
                         </form>
                         @can('admin-login')
                             <a class="hover:text-gray-200 hover:underline" href="{{ route('admin.index') }}">
@@ -71,8 +71,8 @@
                             </a>
                         @endcan
                     @else
-                        <a class="py-2 px-4 mr-2 bg-gray-500 hover:bg-gray-700" href="{{ route('register') }}">Register</a>
-                        <a class="py-2 px-4 bg-green-500 hover:bg-green-700" href="{{ route('login') }}">Login</a>
+                        <a class="py-2 px-4 mr-2 bg-gray-500 hover:bg-gray-700" href="{{ route('register') }}">Đăng ký</a>
+                        <a class="py-2 px-4 bg-green-500 hover:bg-green-700" href="{{ route('login') }}">Đăng nhập</a>
                     @endauth
                 </div>
             </nav>
