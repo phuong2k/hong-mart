@@ -76,7 +76,7 @@
                     @endauth
                 </div>
             </nav>
-            <div class="flex w-full pt-3 items-center justify-center text-lg no-underline text-white pr-6">
+            <div class="flex w-full pt-3 items-center justify-center text-lg no-underline text-white">
                 <h1 class="mb-2 text-2xl font-sans tracking-tight text-white dark:text-white">{{$setting->site_name}}</h1>
             </div>
         </div>
