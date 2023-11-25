@@ -126,8 +126,6 @@
                             headers: {
                                 'Content-Type': 'application/json',
                                 // Có thể thêm các headers khác nếu cần
-                                'Accept': 'application/json', // Nếu server yêu cầu dữ liệu JSON
-                                'Authorization': 'Bearer ' + yourAccessToken, // Nếu cần token xác thực
                             },
                             body: JSON.stringify({
                                 input: inputValue
