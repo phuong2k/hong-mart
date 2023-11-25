@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\Page;
-use App\Models\Post;
 use App\Observers\PageObserver;
 use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
@@ -31,7 +30,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Page::observe(PageObserver::class);
-        Post::observe(PostObserver::class);
     }
 
     /**

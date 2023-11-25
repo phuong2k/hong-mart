@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog CMS - Admin Panel</title>
+    <title>CMS - Admin Panel</title>
     <meta name="author" content="Yasser Elgammal">
     <meta name="description" content="">
 
@@ -67,33 +67,23 @@
                     Writer
                 @endcan
             </a>
-            <button onclick="location.href='{{ route('admin.post.create') }}';"
+            <button onclick="location.href='{{ route('webhome') }}';"
                 class="w-full bg-white cta-btn font-semibold py-2 mt-1 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Post
+                Về trang chủ
             </button>
         </div>
         <nav class="text-white text-base font-semibold">
+            @can('admin-only')
+                <a href="{{ route('admin.product.index') }}"
+                    class="{{ request()->routeIs('*.product.*') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} flex items-center text-white py-4 pl-6 nav-item">
+                    <i class="fas fa-store mr-3"></i>
+                    Sản Phẩm
+                </a>
+            @endcan
             <a href="{{ route('admin.index') }}"
                 class="{{ request()->routeIs('admin.index') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} flex items-center text-white py-4 pl-6 nav-item">
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Dashboard
-            </a>
-            @can('admin-only')
-                <a href="{{ route('admin.category.index') }}"
-                    class="{{ request()->routeIs('*.category.*') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} flex items-center text-white py-4 pl-6 nav-item">
-                    <i class="fas fa-sticky-note mr-3"></i>
-                    Categories
-                </a>
-            @endcan
-            <a href="{{ route('admin.post.index') }}"
-                class="{{ request()->routeIs('*.post.*') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} flex items-center text-white  py-4 pl-6 nav-item">
-                <i class="fas fa-newspaper mr-3"></i>
-                Posts
-            </a>
-            <a href="{{ route('admin.tag.index') }}"
-                class="{{ request()->routeIs('*.tag.*') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} flex items-center text-white  py-4 pl-6 nav-item">
-                <i class="fas fa-tag mr-3"></i>
-                Tags
             </a>
             @can('admin-only')
                 <a href="{{ route('admin.page.index') }}"
@@ -135,14 +125,14 @@
             {{-- Search --}}
             <div class="relative text-lg bg-transparent text-gray-800 rounded">
                 <div class="flex items-center border-b border-teal-500 py-2">
-                    <form action="{{ route('admin.post.search') }}" method="GET">
-                    <input class="bg-transparent border-none mr-3 px-2 leading-tight focus:outline-none" type="text"
-                        placeholder="Search" name="search">
+                    <form action="{{ route('admin.product.search') }}" method="GET">
+                        <input class="bg-transparent border-none mr-3 px-2 leading-tight focus:outline-none"
+                            type="text" placeholder="Search" name="search">
                     </form>
                     <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
                         <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px"
-                            y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+                            viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;"
                             xml:space="preserve" width="512px" height="512px">
                             <path
                                 d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
@@ -155,15 +145,16 @@
                 <button @click="isOpen = !isOpen"
                     class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
                     @if ($user_avatar == null)
-                    <img src="{{ asset('import/assets/profile-pic-dummy.png') }}">
+                        <img src="{{ asset('import/assets/profile-pic-dummy.png') }}">
                     @else
-                    <img src="{{ asset('storage') . '/' . $user_avatar }}">
+                        <img src="{{ asset('storage') . '/' . $user_avatar }}">
                     @endif
                 </button>
                 <button x-show="isOpen" @click="isOpen = false"
                     class="h-full w-full fixed inset-0 cursor-default"></button>
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-                    <a href="{{ route('admin.account.index') }}" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                    <a href="{{ route('admin.account.index') }}"
+                        class="block px-4 py-2 account-link hover:text-white">Account</a>
                     <a href="http://linkedin.com" class="block px-4 py-2 account-link hover:text-white">Support</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -176,7 +167,8 @@
         <!-- Mobile Header & Nav -->
         <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
             <div class="flex items-center justify-between">
-                <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+                <a href="{{ route('admin.index') }}"
+                    class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
                 <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
                     <i x-show="!isOpen" class="fas fa-bars"></i>
                     <i x-show="isOpen" class="fas fa-times"></i>
@@ -185,26 +177,23 @@
 
             <!-- Dropdown Nav -->
             <nav :class="isOpen ? 'flex' : 'hidden'" class="flex flex-col pt-4">
-                <a href="index.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                <a href="{{ route('webhome') }}"
+                    class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
                     <i class="fas fa-tachometer-alt mr-3"></i>
-                    Dashboard
+                    Trang chủ
                 </a>
                 @can('admin-only')
-                    <a href="{{ route('admin.category.index') }}"
-                        class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                        <i class="fas fa-sticky-note mr-3"></i>
-                        Categories
+                    <a href="{{ route('admin.product.index') }}"
+                        class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                        <i class="fas fa-store mr-3"></i>
+                        
+                        Sản Phẩm
                     </a>
                 @endcan
-                <a href="{{ route('admin.post.index') }}"
-                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-table mr-3"></i>
-                    Posts
-                </a>
-                <a href="{{ route('admin.tag.index') }}"
-                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-align-left mr-3"></i>
-                    Tags
+                <a href="{{ route('admin.index') }}"
+                    class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
                 </a>
                 @can('admin-only')
                     <a href="{{ route('admin.page.index') }}"
@@ -232,13 +221,8 @@
                         Sign Out
                     </button>
                 </form>
-                {{-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                    <i class="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
-                </button> --}}
+                
             </nav>
-            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Report
-            </button> -->
         </header>
         @if (Session::has('message'))
             <div class="flex items-center bg-green-500 text-white text-sm font-bold px-4 py-3" role="alert">
@@ -248,7 +232,8 @@
                 </svg>
                 <p>{{ Session::get('message') }}.</p>
             </div>
-        @elseif (Session::has('error')){
+        @elseif (Session::has('error'))
+            {
             <div class="flex items-center bg-red-500 text-white text-sm font-bold px-4 py-3" role="alert">
                 <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path
@@ -256,7 +241,7 @@
                 </svg>
                 <p>{{ Session::get('error') }}.</p>
             </div>
-        }
+            }
         @endif
 
         @if ($errors->any())
@@ -278,7 +263,8 @@
 
         <footer class="w-full bg-white text-right p-4">
             ControlPanel by <a target="_blank" href="https://davidgrzyb.com" class="underline">David Grzyb</a> |
-            Developed by <a target="_blank" href="https://linkedin.com/in/elgammal" class="underline">Yasser Elgammal</a>.
+            Developed by <a target="_blank" href="https://linkedin.com/in/elgammal" class="underline">Yasser
+                Elgammal</a>.
         </footer>
     </div>
 

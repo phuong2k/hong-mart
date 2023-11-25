@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        @isset($title)
+        {{-- @isset($title)
             {{ ucfirst($title) }} -
-        @endisset {{ config('app.name') }}
+        @endisset {{ config('app.name') }} --}}
+        Phương Duy
     </title>
     <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
     <style>
         @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
 
@@ -24,6 +26,11 @@
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script>
+        window.envUrl = "{{ env('APP_URL') }}";
+    </script>
 </head>
 
 <body class="bg-white font-family-karla">
@@ -47,43 +54,30 @@
         }
     @endif
     <!-- Top Bar Nav -->
-    <nav class="w-full py-4 bg-blue-800 shadow">
+    <nav class="w-full pt-3 bg-blue-800 shadow">
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between">
 
-            <nav>
-                <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-                    @foreach ($pages_nav as $page)
-                        <li><a class="hover:text-gray-200 hover:underline px-4"
-                                href="{{ route('page.show', $page->slug) }}">{{ $page->name }}</a></li>
-                    @endforeach
-
+            <nav class='w-full'>
+                <div
+                    class="flex w-full px-4 items-center justify-between font-bold text-sm text-white uppercase no-underline">
                     @auth
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button class="py-2 px-4 bg-red-500 hover:bg-red-700">LogOut</button>
                         </form>
+                        @can('admin-login')
+                            <a class="hover:text-gray-200 hover:underline" href="{{ route('admin.index') }}">
+                                <button class="py-2 px-4 bg-green-500 hover:bg-green-700">Quản lí</button>
+                            </a>
+                        @endcan
                     @else
-                        <li><a class="py-2 px-4 mr-2 bg-gray-500 hover:bg-gray-700"
-                                href="{{ route('register') }}">Register</a>
-                        <li><a class="py-2 px-4 bg-green-500 hover:bg-green-700" href="{{ route('login') }}">Login</a>
-                        @endauth
-
-                </ul>
+                        <a class="py-2 px-4 mr-2 bg-gray-500 hover:bg-gray-700" href="{{ route('register') }}">Register</a>
+                        <a class="py-2 px-4 bg-green-500 hover:bg-green-700" href="{{ route('login') }}">Login</a>
+                    @endauth
+                </div>
             </nav>
-
-            <div class="flex items-center text-lg no-underline text-white pr-6">
-                <a class="" href="{{ $setting->url_fb }}">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a class="pl-6" href="{{ $setting->url_insta }}">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a class="pl-6" href="{{ $setting->url_twitter }}">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a class="pl-6" href="{{ $setting->url_linkedin }}">
-                    <i class="fab fa-linkedin"></i>
-                </a>
+            <div class="flex w-full pt-3 items-center justify-center text-lg no-underline text-white pr-6">
+                <h1 class="mb-2 text-2xl font-sans tracking-tight text-white dark:text-white">TẠP HÓA PHƯƠNG DUY</h1>
             </div>
         </div>
 
@@ -91,125 +85,115 @@
 
     <!-- Text Header -->
     <header class="w-full container mx-auto">
-        <div class="flex flex-col items-center py-12">
-            <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="{{ route('webhome') }}">
-                {{ $setting->site_name }}
-            </a>
-            <p class="text-lg text-gray-600">
-                {{ $setting->description }}
-            </p>
+        <div class="flex w-full flex-col items-center px-1 py-1">
+            <form class='w-full'>
+                <label for="default-search"
+                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Tìm</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="search" id="default-search"
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Nhập tên sản phẩm muốn tìm">
+                    <button type="button" id="customSubmitButton"
+                        class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Tìm</button>
+                </div>
+                <span class='text-red-600 product-not-found'>
+                </span>
+            </form>
+            <script>
+                document.getElementById('customSubmitButton').addEventListener('click', function(event) {
+                    var ulElement = document.querySelector('.product-ul');
+                    var messageNotFound = document.querySelector('.product-not-found');
+                    messageNotFound.innerText = ''
+                    ulElement.innerHTML = '';
+                    var inputValue = document.getElementById('default-search').value;
+                    event.preventDefault(); // Hủy bỏ hành vi mặc định của nút submit
+                    performCustomSearch(inputValue);
+                });
+
+                function performCustomSearch(inputValue) {
+                    // Thực hiện AJAX POST
+                    var url = '{{ route('api.products.search') }}';
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // Có thể thêm các headers khác nếu cần
+                            },
+                            body: JSON.stringify({
+                                input: inputValue
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            var ulElement = document.querySelector('.product-ul');
+                            // Xử lý dữ liệu trả về từ API (data)
+                            console.log('Dữ liệu trả về từ API:', data);
+                            // Lặp qua mảng dữ liệu từ API và tạo các phần tử li
+                            if (data.products.length === 0) {
+                                var messageNotFound = document.querySelector('.product-not-found');
+                                messageNotFound.innerText = 'Không tìm thấy!';
+                            }
+                            data.products.forEach(product => {
+                                // Tạo phần tử li
+                                const liElement = document.createElement('li');
+                                liElement.classList.add('h-24', 'w-full', 'mb-1', 'px-1', 'items-center', 'border',
+                                    'border-gray-200', 'rounded-lg', 'shadow', 'hover:bg-gray-100',
+                                    'dark:border-gray-700', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'flex');
+                                liElement.style.backgroundColor = '#F9FAFB';
+                                // Tạo nội dung của phần tử li
+                                liElement.innerHTML = `
+                                    <img class="object-cover rounded-t-lg rounded-lg h-20 w-20 md:rounded-none md:rounded-s-lg" src="${origin}/storage/${product.image?product.image:'/images/no-image.png'}" alt="">
+                                    <div class="flex flex-col justify-between p-1 leading-normal" style='max-width: calc( 100% - 100px )'>
+                                    <h5 class="mb-2 text-lg font-sans tracking-tight text-gray-900 dark:text-white custom-card-name" >${product.name}</h5>
+                                        <p class="font-sans text-lg text-red-700 dark:text-red-400">Giá: ${product.price}</p>
+                                    </div>
+                                    `;
+                                // Chèn phần tử li vào thẻ ul
+                                ulElement.appendChild(liElement);
+                            });
+                        })
+                        .catch(error => {
+                            // Xử lý lỗi
+                            var messageNotFound = document.querySelector('.product-not-found');
+                            messageNotFound.innerText = 'Không tìm thấy!';
+                        });
+                }
+            </script>
+            <style>
+                .custom-card-name {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -webkit-line-clamp: 2;
+                    /* Number of lines to show */
+                    max-height: 3em;
+                    /* Adjust the max height as needed */
+                }
+            </style>
         </div>
     </header>
-
-    <!-- Topic Nav -->
-    <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
-        <div class="block sm:hidden">
-            <a href="#"
-                class="block md:hidden text-base font-bold uppercase text-center flex justify-center items-center"
-                @click="open = !open">
-                Topics <i :class="open ? 'fa-chevron-down' : 'fa-chevron-up'" class="fas ml-2"></i>
-            </a>
-        </div>
-        <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
-            <div
-                class="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
-                <a href="{{ route('webhome') }}" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Home</a>
-                @forelse ($categories as $category)
-                    <a href="{{ route('category.show', $category->slug) }}"
-                        class="hover:bg-gray-400 rounded py-2 px-4 mx-2">{{ $category->name }}</a>
-                @empty
-                    No Categories !
-                @endforelse
+    <section class='px-1 flex flex-col'>
+        <ul class='product-ul block'>
+        </ul>
+        <div class="w-full flex flex-col align-middle justify-center" style='height: 450px'>
+            <div class="w-full h-full flex align-middle justify-center">
+                <img class="object-cover rounded-t-lg rounded-lg w-2/3 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+                    src="{{ asset('storage') . '/images' . '/qrvietcombank.jpg' }}" alt="">
             </div>
         </div>
-    </nav>
-
-
-    <div class="container mx-auto flex flex-wrap py-6">
-
-        {{ $slot }}
-
-        <!-- Sidebar Section -->
-        @if (!request()->routeIs('page.show'))
-            <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
-
-                <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                    <p class="text-xl font-semibold pb-5">About Us</p>
-                    <p class="pb-2">{{ $setting->about }}</p>
-                    {{-- <a href="#"
-                    class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
-                    Get to know us
-                </a> --}}
-                </div>
-
-                <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                    <p class="text-xl font-semibold pb-5">Tags</p>
-                    <div class="flex flex-wrap">
-
-                        @foreach ($tags as $tag)
-                            <a href="{{ route('tag.show', $tag->name) }}"
-                                class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-blue-700 bg-blue-100 border border-blue-300 ">
-                                <div class="p-1.5 text-xs font-normal leading-none max-w-full flex-initial">
-                                    {{ $tag->name }}</div>
-                            </a>
-                        @endforeach
-
-                    </div>
-                </div>
-
-                <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                    <p class="text-xl font-semibold pb-5">Top 5 Writers</p>
-                    {{--  --}}
-                    <div class="content flex justify-between py-2 w-full">
-                        <div class="px-2 justify-between">
-                            Name
-
-                        </div>
-                        <div class="justify-between">
-                            Posts Count
-                        </div>
-                    </div>
-                    @forelse ($top_users as $top)
-                        <div class="my-1.5 py-3	px-4 flex justify-center rounded-lg shadow-lg bg-white w-full ">
-                            @if ($top->avatar == null)
-                                <img src="{{ asset('import/assets/profile-pic-dummy.png') }}"
-                                    class="w-10 h-10 rounded-full">
-                            @else
-                                <img class="w-10 h-10 rounded-full" src="{{ asset("storage/$top->avatar") }}"
-                                    alt="">
-                            @endif
-                            <div class="content flex justify-between py-2 w-full">
-                                <div class="px-2 justify-between">
-                                    {{ $top->name }}
-                                </div>
-                                <div class="justify-between">
-                                    {{ $top->posts_count }}
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        No Members !
-                    @endforelse
-                </div>
-
-            </aside>
-        @endif
-
-
-    </div>
-
-    <footer class="w-full border-t bg-white pb-12">
-
+    </section>
+    <footer class="fixed bottom-0 w-full border-t bg-white pb-3">
         <div class="w-full container mx-auto flex flex-col items-center">
-            <div class="flex flex-col md:flex-row text-center md:text-left md:justify-between py-6">
-                @foreach ($pages_footer as $page)
-                    <a href="{{ route('page.show', $page->slug) }}" class="uppercase px-3 hover:text-blue-700">{{ $page->name }}</a>
-                @endforeach
-            </div>
-            <div class="uppercase pb-6">&copy; {{ $setting->copy_rights }}</div>
+            <div class="uppercase">&copy; {{ $setting->copy_rights }}</div>
         </div>
     </footer>
-
 </body>
 
 </html>
