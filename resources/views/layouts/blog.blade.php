@@ -8,7 +8,7 @@
         {{-- @isset($title)
             {{ ucfirst($title) }} -
         @endisset {{ config('app.name') }} --}}
-        Phương Duy
+        PD-Mart
     </title>
     <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
@@ -77,7 +77,7 @@
                 </div>
             </nav>
             <div class="flex w-full pt-3 items-center justify-center text-lg no-underline text-white pr-6">
-                <h1 class="mb-2 text-2xl font-sans tracking-tight text-white dark:text-white">TẠP HÓA PHƯƠNG DUY</h1>
+                <h1 class="mb-2 text-2xl font-sans tracking-tight text-white dark:text-white">{{$setting->site_name}}</h1>
             </div>
         </div>
 
@@ -148,11 +148,12 @@
                                     'dark:border-gray-700', 'dark:bg-gray-800', 'dark:hover:bg-gray-700', 'flex');
                                 liElement.style.backgroundColor = '#F9FAFB';
                                 // Tạo nội dung của phần tử li
+                                var formattedPrice = product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
                                 liElement.innerHTML = `
-                                    <img class="object-cover rounded-t-lg rounded-lg h-20 w-20 md:rounded-none md:rounded-s-lg" src="${origin}/storage/${product.image?product.image:'/images/no-image.png'}" alt="">
-                                    <div class="flex flex-col justify-between p-1 leading-normal" style='max-width: calc( 100% - 100px )'>
+                                    <img class="object-cover rounded-t-lg rounded-lg h-20 w-20 md:rounded-none md:rounded-s-lg" src="${origin}/storage/${product.image?product.image:'/images/no-image.jpg'}" alt="">
+                                    <div class="flex flex-col justify-between p-1 leading-normal" style='max-width: calc( 100% - 80px )'>
                                     <h5 class="mb-2 text-lg font-sans tracking-tight text-gray-900 dark:text-white custom-card-name" >${product.name}</h5>
-                                        <p class="font-sans text-lg text-red-700 dark:text-red-400">Giá: ${product.price}</p>
+                                        <p class="font-sans text-lg text-red-700 dark:text-red-400">Giá: ${formattedPrice}</p>
                                     </div>
                                     `;
                                 // Chèn phần tử li vào thẻ ul

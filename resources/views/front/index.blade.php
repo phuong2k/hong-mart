@@ -4,20 +4,20 @@
 
 
         <!-- Article -->
-        @forelse ($posts as $post)
+        @forelse ($products as $product)
         <article class="flex flex-col shadow my-4">
-            <a href="{{ route('post.show', $post->slug ) }}" class="hover:opacity-75">
-            <img src="{{ asset("storage/$post->image") }}" width="1000" height="500">
+            <a href="{{ route('product.show', $product->slug ) }}" class="hover:opacity-75">
+            <img src="{{ asset("storage/$product->image") }}" width="1000" height="500">
             </a>
             <div class="bg-white flex flex-col justify-start p-6">
-                <a href="{{ route('category.show', $post->category->slug) }} " class="text-blue-700 text-sm font-bold uppercase pb-4">{{ $post->category->name }}</a>
-                <a href="{{ route('post.show', $post->slug ) }}" class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $post->title }}</a>
+                <a href="{{ route('product.show', $product->slug) }} " class="text-blue-700 text-sm font-bold uppercase pb-4">{{ $product->name }}</a>
+                <a href="{{ route('product.show', $product->slug ) }}" class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $product->name }}</a>
                 <p href="#" class="text-sm pb-1">
-                    By <a href="#" class="font-semibold hover:text-gray-800">{{ $post->user->name }}</a>, Published on {{ $post->created_at }}
+                    By <a href="#" class="font-semibold hover:text-gray-800">{{ $product->name }}</a>, Published on {{ $product->created_at }}
                 </p>
-                <p class="pb-3">{!! substr($post->content, 0, 100) !!} ...</p>
+                <p class="pb-3">{!! substr($product->content, 0, 100) !!} ...</p>
                 {{-- <br /> --}}
-                <a href="{{ route('post.show', $post->slug) }}" class="mt-px uppercase text-gray-800 font-bold hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('product.show', $product->slug) }}" class="mt-px uppercase text-gray-800 font-bold hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
             </div>
         </article>
         @empty
@@ -29,7 +29,7 @@
     <!-- Pagination -->
     <div class="flex items-center py-8">
 
-        {{ $posts->links() }}
+        {{ $products->links() }}
 
     </div>
 

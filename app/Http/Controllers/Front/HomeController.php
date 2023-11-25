@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
     // Home Page
     public function index()
     {
-        // Get the active posts with (Category and User) details
-        $posts = Post::published()->with(['category', 'user'])->latest('created_at')->paginate(10);
+        $products = Product::latest('created_at')->paginate(10);
 
-        return view('front.index', compact('posts'));
+        return view('front.index', compact('products'));
     }
 
 }

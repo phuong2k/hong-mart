@@ -276,7 +276,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 
-    @if (request()->routeIs('*.post.create') || request()->routeIs('*.post.edit'))
+    @if (request()->routeIs('*.product.create') || request()->routeIs('*.product.edit'))
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -298,17 +298,17 @@
                 ]
             });
         </script>
-        <script>
+        {{-- <script>
             $('#title').change(function(e) {
-                $.get('{{ route('admin.post.getslug') }}', {
+                $.get('{{ route('admin.product.getslug') }}', {
                         'title': $(this).val()
                     },
                     function(data) {
                         $('#slug').val(data.slug);
                     }
                 );
-            });
-        </script>
+            }); 
+        </script> --}}
     @endif
 
     @if (request()->routeIs('*.category.create') || request()->routeIs('*.category.edit'))

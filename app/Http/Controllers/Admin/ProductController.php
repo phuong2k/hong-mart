@@ -90,7 +90,9 @@ class ProductController extends Controller
     {
         $product_data = $request->safe()->except('image');
         if ($request->hasfile('image')) {
-            Storage::delete($product->image);
+            if($product->image != null){
+                Storage::delete($product->image);
+            }
             $get_file = $request->file('image')->store('images/products');
             $product_data['image'] = $get_file;
         }
