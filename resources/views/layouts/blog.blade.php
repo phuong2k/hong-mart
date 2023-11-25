@@ -120,7 +120,7 @@
 
                 function performCustomSearch(inputValue) {
                     // Thực hiện AJAX POST
-                    var url = '{{ route('api.products.search') }}';
+                    var url = '/api/products/search';
                     fetch(url, {
                             method: 'POST',
                             headers: {
