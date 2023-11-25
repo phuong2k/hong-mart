@@ -87,6 +87,7 @@
     <header class="w-full container mx-auto">
         <div class="flex w-full flex-col items-center px-1 py-1">
             <form class='w-full'>
+                @csrf
                 <label for="default-search"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Tìm</label>
                 <div class="relative">
@@ -125,6 +126,8 @@
                             headers: {
                                 'Content-Type': 'application/json',
                                 // Có thể thêm các headers khác nếu cần
+                                'Accept': 'application/json', // Nếu server yêu cầu dữ liệu JSON
+                                'Authorization': 'Bearer ' + yourAccessToken, // Nếu cần token xác thực
                             },
                             body: JSON.stringify({
                                 input: inputValue
