@@ -52,9 +52,16 @@ class ProductController extends Controller
     {
         $product_data = $request->safe()->except('image');
 
-        if ($request->hasfile('image')) {
-            $get_file = $request->file('image')->store('images/products');
-            $product_data['image'] = $get_file;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('images/products', 'google');
+        
+            // Lấy URL của ảnh vừa lưu
+            $url = Storage::disk('google')->url($path);
+        
+            // Gán URL vào dữ liệu sản phẩm
+            $product_data['image'] = $url;
+            Storage::delete('images/products/' . $file->getClientOriginalName());
         }
         if($product_data['count'] === null || $product_data['count'] === 0) {
             $product_data['status'] = 1;

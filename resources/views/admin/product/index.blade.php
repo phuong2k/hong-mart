@@ -48,7 +48,7 @@
                                                 src="{{ asset('import/assets/profile-pic-dummy.png') }}" alt="">
                                         @else
                                             <img class="object-cover rounded-t-lg rounded-lg h-12 w-12 md:rounded-none md:rounded-s-lg"
-                                                src="{{ asset('storage') . '/' . $product->image }}" alt="">
+                                                src="{{$product->image }}" alt="">
                                         @endif
                                     </td>
                                     <td class="py-4 px-6 border-b border-grey-light">{{ $product->id }}</td>
