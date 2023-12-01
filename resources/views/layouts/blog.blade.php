@@ -151,7 +151,7 @@
                                 // Tạo nội dung của phần tử li
                                 var formattedPrice = product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
                                 liElement.innerHTML = `
-                                    <img class="object-cover rounded-t-lg rounded-lg h-20 w-20 md:rounded-none md:rounded-s-lg" src="${origin}/storage/${product.image?product.image:'/images/no-image.jpg'}" alt="">
+                                    <img class="object-cover rounded-t-lg rounded-lg h-20 w-20 md:rounded-none md:rounded-s-lg" src="${product.image?product.image:'/images/no-image.jpg'}" alt="">
                                     <div class="flex flex-col justify-between p-1 leading-normal" style='max-width: calc( 100% - 80px )'>
                                     <h5 class="mb-2 text-lg font-sans tracking-tight text-gray-900 dark:text-white custom-card-name" >${product.name}</h5>
                                         <p class="font-sans text-lg text-red-700 dark:text-red-400">Giá: ${formattedPrice}</p>

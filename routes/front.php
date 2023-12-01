@@ -11,6 +11,11 @@ Route::get('/', [HomeController::class, 'index'])->name('webhome');
 Route::get('/page/{slug}', [FrontPageController::class, 'getPageBySlug'])->name('page.show');
 Route::get('/product/{slug}', [ProductController::class, 'getProductBySlug'])->name('product.show');
 
+Route::get('upload-file', function() {
+    \Storage::disk('google')->put('google-drive.txt', 'Google Drive As Filesystem In Laravel (ManhDanBlogs)');
+    dd('Đã upload file lên google drive thành công!');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

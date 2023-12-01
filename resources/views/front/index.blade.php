@@ -7,7 +7,7 @@
         @forelse ($products as $product)
         <article class="flex flex-col shadow my-4">
             <a href="{{ route('product.show', $product->slug ) }}" class="hover:opacity-75">
-            <img src="{{ asset("storage/$product->image") }}" width="1000" height="500">
+            <img src="{{$product->image}}" width="1000" height="500">
             </a>
             <div class="bg-white flex flex-col justify-start p-6">
                 <a href="{{ route('product.show', $product->slug) }} " class="text-blue-700 text-sm font-bold uppercase pb-4">{{ $product->name }}</a>
