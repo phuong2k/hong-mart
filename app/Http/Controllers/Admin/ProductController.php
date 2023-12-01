@@ -177,10 +177,9 @@ class ProductController extends Controller
             }
         }
 
-        // Delete the product
-        // $product->delete();
+        $product->delete();
 
-        // return back()->with('message', 'Xóa thành công');
+        return back()->with('message', 'Xóa thành công');
     }
 
     public function getSlug(Request $request)
